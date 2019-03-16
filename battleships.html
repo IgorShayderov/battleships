@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+
+<head>
+	<title>Морской бой</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="battleships.css">
+
+</head>
+
+<body>
+	<h1>Морской бой</h1>
+	
+<main>
+	<div>
+		<p id='message'>Окно системных сообщений.</p>
+	</div>
+<div id='counter'>
+	<p>Всего выстрелов: <span id='total_shots'>0</span>.</p>
+	<p>Попаданий: <span id='hits'>0</span>.</p>
+	<p>Промахов: <span id='misses'>0</span>.</p>
+	<p>Осталось раз попасть: <span id='hits_left'>0</span>.</p>
+</div>
+
+<div class='tables'>
+	<table id='your_field'>
+		<caption> Ваше поле </caption>
+		<tr> <td class='literal'>A</td> <td id='A1' class='field'></td> <td id='A2' class='field'></td> <td id='A3' class='field'></td> <td id='A4' class='field'></td> <td id='A5' class='field'></td> <td id='A6' class='field'></td> <td id='A7' class='field'></td> <td id='A8' class='field'></td> <td id='A9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>B</td> <td id='B1' class='field'></td> <td id='B2' class='field'></td> <td id='B3' class='field'></td> <td id='B4' class='field'></td> <td id='B5' class='field'></td> <td id='B6' class='field'></td> <td id='B7' class='field'></td> <td id='B8' class='field'></td> <td id='B9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>C</td> <td id='C1' class='field'></td> <td id='C2' class='field'></td> <td id='C3' class='field'></td> <td id='C4' class='field'></td> <td id='C5' class='field'></td> <td id='C6' class='field'></td> <td id='C7' class='field'></td> <td id='C8' class='field'></td> <td id='C9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>D</td> <td id='D1' class='field'></td> <td id='D2' class='field'></td> <td id='D3' class='field'></td> <td id='D4' class='field'></td> <td id='D5' class='field'></td> <td id='D6' class='field'></td> <td id='D7' class='field'></td> <td id='D8' class='field'></td> <td id='D9' class='field'></td> </tr>	
+
+		<tr> <td class='literal'>E</td> <td id='E1' class='field'></td> <td id='E2' class='field'></td> <td id='E3' class='field'></td> <td id='E4' class='field'></td> <td id='E5' class='field'></td> <td id='E6' class='field'></td> <td id='E7' class='field'></td> <td id='E8' class='field'></td> <td id='E9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>F</td> <td id='F1' class='field'></td> <td id='F2' class='field'></td> <td id='F3' class='field'></td> <td id='F4' class='field'></td> <td id='F5' class='field'></td> <td id='F6' class='field'></td> <td id='F7' class='field'></td> <td id='F8' class='field'></td> <td id='F9' class='field'></td> </tr>	
+
+		<tr> <td class='literal'>G</td> <td id='G1' class='field'></td> <td id='G2' class='field'></td> <td id='G3' class='field'></td> <td id='G4' class='field'></td> <td id='G5' class='field'></td> <td id='G6' class='field'></td> <td id='G7' class='field'></td> <td id='G8' class='field'></td> <td id='G9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>H</td> <td id='H1' class='field'></td> <td id='H2' class='field'></td> <td id='H3' class='field'></td> <td id='H4' class='field'></td> <td id='H5' class='field'></td> <td id='H6' class='field'></td> <td id='H7' class='field'></td> <td id='H8' class='field'></td> <td id='H9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>I</td> <td id='I1' class='field'></td> <td id='I2' class='field'></td> <td id='I3' class='field'></td> <td id='I4' class='field'></td> <td id='I5' class='field'></td> <td id='I6' class='field'></td> <td id='I7' class='field'></td> <td id='I8' class='field'></td> <td id='I9' class='field'></td> </tr>
+
+		<tr> <td></td> <td class='figure'>1</td> <td class='figure'>2</td> <td class='figure'>3</td> <td class='figure'>4</td> <td class='figure'>5</td> <td class='figure'>6</td> <td class='figure'>7</td> <td class='figure'>8</td> <td class='figure'>9</td> </tr>
+	</table>
+
+<table id='enemys_field'>
+	    <caption> Поле врага </caption>
+		<tr> <td class='literal'>A</td> <td id='A1' class='field'></td> <td id='A2' class='field'></td> <td id='A3' class='field'></td> <td id='A4' class='field'></td> <td id='A5' class='field'></td> <td id='A6' class='field'></td> <td id='A7' class='field'></td> <td id='A8' class='field'></td> <td id='A9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>B</td> <td id='B1' class='field'></td> <td id='B2' class='field'></td> <td id='B3' class='field'></td> <td id='B4' class='field'></td> <td id='B5' class='field'></td> <td id='B6' class='field'></td> <td id='B7' class='field'></td> <td id='B8' class='field'></td> <td id='B9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>C</td> <td id='C1' class='field'></td> <td id='C2' class='field'></td> <td id='C3' class='field'></td> <td id='C4' class='field'></td> <td id='C5' class='field'></td> <td id='C6' class='field'></td> <td id='C7' class='field'></td> <td id='C8' class='field'></td> <td id='C9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>D</td> <td id='D1' class='field'></td> <td id='D2' class='field'></td> <td id='D3' class='field'></td> <td id='D4' class='field'></td> <td id='D5' class='field'></td> <td id='D6' class='field'></td> <td id='D7' class='field'></td> <td id='D8' class='field'></td> <td id='D9' class='field'></td> </tr>	
+
+		<tr> <td class='literal'>E</td> <td id='E1' class='field'></td> <td id='E2' class='field'></td> <td id='E3' class='field'></td> <td id='E4' class='field'></td> <td id='E5' class='field'></td> <td id='E6' class='field'></td> <td id='E7' class='field'></td> <td id='E8' class='field'></td> <td id='E9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>F</td> <td id='F1' class='field'></td> <td id='F2' class='field'></td> <td id='F3' class='field'></td> <td id='F4' class='field'></td> <td id='F5' class='field'></td> <td id='F6' class='field'></td> <td id='F7' class='field'></td> <td id='F8' class='field'></td> <td id='F9' class='field'></td> </tr>	
+
+		<tr> <td class='literal'>G</td> <td id='G1' class='field'></td> <td id='G2' class='field'></td> <td id='G3' class='field'></td> <td id='G4' class='field'></td> <td id='G5' class='field'></td> <td id='G6' class='field'></td> <td id='G7' class='field'></td> <td id='G8' class='field'></td> <td id='G9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>H</td> <td id='H1' class='field'></td> <td id='H2' class='field'></td> <td id='H3' class='field'></td> <td id='H4' class='field'></td> <td id='H5' class='field'></td> <td id='H6' class='field'></td> <td id='H7' class='field'></td> <td id='H8' class='field'></td> <td id='H9' class='field'></td> </tr>
+
+		<tr> <td class='literal'>I</td> <td id='I1' class='field'></td> <td id='I2' class='field'></td> <td id='I3' class='field'></td> <td id='I4' class='field'></td> <td id='I5' class='field'></td> <td id='I6' class='field'></td> <td id='I7' class='field'></td> <td id='I8' class='field'></td> <td id='I9' class='field'></td> </tr>
+
+		<tr> <td></td> <td class='figure'>1</td> <td class='figure'>2</td> <td class='figure'>3</td> <td class='figure'>4</td> <td class='figure'>5</td> <td class='figure'>6</td> <td class='figure'>7</td> <td class='figure'>8</td> <td class='figure'>9</td> </tr>
+	</table>
+</div>
+	<form>
+	<label for="guessInput"><font color="red">Введите ячейку:</font></label>
+	<input id="guessInput" type="text" class="form-control">
+	<input id="shot" type="button" value='Выстрел!'></input>
+	<input id="restart_game" type='button' value='Начать заново'></input></form>
+<div>
+
+<script src="battleship.js"></script>
+</main>
+</body>
+
+</html>
