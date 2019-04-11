@@ -50,11 +50,17 @@ caption {
 	background-color: #f43535;
 	display: inline-block;
 }
-#shot, #restart_game {
+#shot, #restart_game, #confirm {
 	color: red;
 	font-weight: bold;
 	display: inline-block;
 }
 #enemys_field {
 	margin-left: 30px;
+}
+#confirm {
+	display:none;
+}
+.selected {
+	background-color: #0c5ad6;
 }

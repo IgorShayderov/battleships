@@ -1,22 +1,22 @@
 var view = {
 	displayMessage: function(msg) {
-		document.getElementById('message').innerHTML = msg;
+		$('#message').text(msg);
 	},
 	displayHit: function(location) {
-		document.getElementById(location).setAttribute("class", "hit");
-		document.getElementById(location).innerHTML= "HIT";
+		$("#"+location).attr("class", "hit");
+		$("#"+location).text("HIT");
 		this.displayMessage("Вы попали во вражеский корабль!");
 	},
 	displayMiss: function(location) {
-		document.getElementById(location).setAttribute("class", "miss");
-		document.getElementById(location).innerHTML = "MISS";
+		$("#"+location).attr("class", "miss");
+		$("#"+location).text("MISS");
 		this.displayMessage("Вы промахнулись!");
 	}
 };
 
 var model = {
 boardSize: 9,
-numShips: 3,
+numShips: 5,
 shipLength: 3,
 shipsSunk: 0,
 
@@ -27,9 +27,7 @@ hits_left: 9,
 vertical_cells: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
 hitted_cells: [],
 
-ships: [{ location: [0, 0, 0], hits: ["","",""]},
-		 { location: [0, 0, 0], hits: ["","",""]},
-		 { location: [0, 0, 0], hits: ["","",""]}],
+ships: [],
 
 foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 		 	{ location: [0, 0, 0], hits: ["","",""]},
@@ -89,11 +87,8 @@ foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 			var first = rand_letter();
 			var second = rand_digit();
 			var direction = Math.floor(Math.random() * 2) // 0 horizontal 1 vertical
-			console.log("direction is " + direction);
-			console.log(first);
-			console.log(second);
+
 			var firstLocation = this.vertical_cells[first] + second;
-			console.log(firstLocation + ' is first location')
 			var left_right; // 0 left 1 right
 			var up_down; // 0 up 1 down
 				if (direction === 1) {
@@ -103,7 +98,6 @@ foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 					} else if (letter === "9" || letter === "8") {
 						left_right = 0;
 					} else {
-						console.log("random!");
 						left_right = Math.floor(Math.random() * 2);
 					}
 				} else if (direction === 0) {
@@ -113,12 +107,9 @@ foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 					} else if (digit === "I" || digit === "H") {
 						up_down = 0;
 					} else {
-						console.log("random!");
 						up_down = Math.floor(Math.random() * 2);
 					}
-				}
-					console.log("left_right is " + left_right);
-					console.log("up_down is " + up_down);	
+				}	
 				//запихивает корабль в локации
 				cur_loc = firstLocation;
 				for (i = 0; i < ships[num].location.length+1; i++){
@@ -127,20 +118,15 @@ foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 					//проверка на совпадение локаций
 					for (var y = 0; y < num; y++) {
 						for (var l = 0; l < ships[y].location.length; l++) {
-							console.log("Verifying location: " + ships[y].location[l] + " and current loc: " + cur_loc);
 							if (ships[y].location[l] === cur_loc) {
-								console.log("Colission detected!");
 								x -= 1;
 								return;
 							}
 						}
 					}
-					console.log("I is: " + i + " length is " + ships[num].location.length);
 					if (i > ships[num].location.length - 1) {
-						console.log("BREEEEEEEEEEEEEEEEAK!!!!");
 						break;
 					}
-					console.log('Location: '+ cur_loc);
 					ships[num].location[i] = cur_loc;
 					//left
 					if (left_right === 0) {
@@ -162,12 +148,10 @@ foe_ships: [{ location: [0, 0, 0], hits: ["","",""]},
 			}, // конец функции deployShip
 
 		deployShips: function() {
-		 	console.log("Starting deploying.");
 			for (x = 0; x < this.numShips; x++) {
-				console.log("Deploying ship: " + (x + 1));
+				this.ships[x] = { location: [0, 0, 0], hits: ["","",""]};
 				this.deployShip(x, this.ships);
-			}
-			console.log("Ending deploying...");
+			};
 		},
 		
 	};  
@@ -193,12 +177,10 @@ var controller = {
 
  	parseGuess: function(guess) {
  		guess = guess.toUpperCase();
-
-			if (guess === null || guess.length !==2){
+			if (guess === null || guess.length !==2 || guess.charAt(1) === "0"){
 				alert("Неправильный ввод координат."); 
 				return false;
 			}
-
 			for(var i = 0; i < model.hitted_cells.length; i++){
 				if (guess === model.hitted_cells[i]) {
 					alert("Вы уже стреляли в эту позицию");
@@ -215,60 +197,34 @@ var controller = {
  				}
 			}
 		},
-
-
-	addEventListenerList: function(list, event, action) {
-		for (var i = 0; i < list.length; i++) {
-			list[i].addEventListener(event, action);
-		}
-	}
-
 };
 
-//////////////////////////
-function Popup () {
-
-this.open = function(){
-
-}
-
-this.close = function(){
-
-}
-
-}
-
-var popUp = new Popup;
-//////////////////////////
-
 function fill_the_fields () {
-	document.getElementById("total_shots").innerHTML = controller.guesses;
-	document.getElementById("hits").innerHTML = model.hits;
-	document.getElementById("misses").innerHTML = model.misses;
-	document.getElementById("hits_left").innerHTML = model.hits_left;
+	$("#total_shots").text(controller.guesses);
+	$("#hits").text(model.hits);
+	$("#misses").text(model.misses);
+	$("#hits_left").text(model.hits_left);
 }
 
 window.onload = function() {
 	model.deployShips();
-
+	$("#guessInput").attr('disabled', 'disabled');
+	$("#shot").attr('disabled', 'disabled');
 	//alert("Расставьте корабли на правом поле.");
-
-
-
-	controller.addEventListenerList(document.querySelectorAll("#enemys_field td"),'click', function(){
-		this.classList.add('selected');
+	$("#enemys_field td").click(function(){
+		$(this).toggleClass('selected');
 	});
 
-	document.querySelector("#shot").addEventListener('click', function () {
+	$("#shot").click(function () {
 		controller.processGuess(document.getElementById('guessInput').value);
 		fill_the_fields();
-		document.querySelector("#guessInput").value = ""
-		})
+		$("#guessInput").val("");
+		});
 
-	document.getElementById("guessInput").onkeypress = function (e) {
+	$("#guessInput").keypress(function (e) {
 		if (e.keyCode === 13) {
 		document.getElementById("shot").click();
 		return false;
 	}
-	}
+	});
 }
