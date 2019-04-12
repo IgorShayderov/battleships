@@ -22,7 +22,6 @@ shipsSunk: 0,
 
 hits: 0,
 misses: 0,
-hits_left: 9,
 
 vertical_cells: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
 hitted_cells: [],
@@ -197,31 +196,47 @@ var controller = {
  				}
 			}
 		},
-};
 
-function fill_the_fields () {
+	fill_the_fields: function() {
 	$("#total_shots").text(controller.guesses);
 	$("#hits").text(model.hits);
 	$("#misses").text(model.misses);
-	$("#hits_left").text(model.hits_left);
-}
+	$("#hits_left").text(model.numShips * 3);	
+	$("#your_ships").text(model.numShips);
+},
+
+	startGame: function() {
+	$("#restart_game").attr('disabled', 'disabled').addClass('closed');
+	$("label font").css("color", "black");
+	$("#guessInput").attr('disabled', 'disabled').addClass('closed');
+	$("#shot").attr('disabled', 'disabled').addClass('closed');
+	view.displayMessage("Расставьте свои корабли на правом поле");
+	}
+};
+
+
 
 window.onload = function() {
 	model.deployShips();
-	$("#guessInput").attr('disabled', 'disabled');
-	$("#shot").attr('disabled', 'disabled');
-	//alert("Расставьте корабли на правом поле.");
-	$("#enemys_field td").click(function(){
+	controller.fill_the_fields();
+	controller.startGame();
+///тут я закончил последний раз, надо исправить
+	$("#enemys_field").on("click", [".selected td"],function(){
 		$(this).toggleClass('selected');
+		if ($(".selected").length === 3){
+			console.log(toString($(".selected").length));
+		}
+		console.log(toString(typeof($(".selected"))));
 	});
 
-	$("#shot").click(function () {
+//события
+	$("#shot").on("click", function () {
 		controller.processGuess(document.getElementById('guessInput').value);
 		fill_the_fields();
 		$("#guessInput").val("");
 		});
 
-	$("#guessInput").keypress(function (e) {
+	$("#guessInput").on("keypress", function (e) {
 		if (e.keyCode === 13) {
 		document.getElementById("shot").click();
 		return false;
