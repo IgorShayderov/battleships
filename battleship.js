@@ -220,16 +220,29 @@ window.onload = function() {
 	model.deployShips();
 	controller.fill_the_fields();
 	controller.startGame();
-///тут я закончил последний раз, надо исправить
-	$("#enemys_field").on("click", [".selected td"],function(){
-		$(this).toggleClass('selected');
+	var ships_amount = $("#your_ships").text();
+	console.log(ships_amount);
+//установка кораблей
+	$("#enemys_field").on("click", "td[id]",function(){
+		$(this).not('.placed').toggleClass('selected');
 		if ($(".selected").length === 3){
-			console.log(toString($(".selected").length));
+			$("#confirm").css("display", "inline-block");
+
+		};
+		if ($(".selected").length !== 3){
+			$("#confirm").css("display", "none");
 		}
-		console.log(toString(typeof($(".selected"))));
 	});
 
 //события
+	$("#confirm").on("click", function(){
+		$(".selected").addClass("placed").removeClass("selected");
+		view.displayMessage("Корабль успешно установлен!");
+		$("#confirm").css("display", "none");
+		ships_amount--;
+		$("#your_ships").text(ships_amount);
+	})
+
 	$("#shot").on("click", function () {
 		controller.processGuess(document.getElementById('guessInput').value);
 		fill_the_fields();
