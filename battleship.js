@@ -205,13 +205,23 @@ var controller = {
 	$("#your_ships").text(model.numShips);
 },
 
-	startGame: function() {
+	prepareGame: function(){
 	$("#restart_game").attr('disabled', 'disabled').addClass('closed');
 	$("label font").css("color", "black");
 	$("#guessInput").attr('disabled', 'disabled').addClass('closed');
 	$("#shot").attr('disabled', 'disabled').addClass('closed');
 	view.displayMessage("Расставьте свои корабли на правом поле");
+	},
+
+	startGame: function(){
+	$("#restart_game").removeAttr("disabled").removeClass('closed');
+	$("label font").css("color","white");
+	$("#guessInput").removeAttr('disabled').removeClass('closed');
+	$("#shot").removeAttr('disabled').removeClass('closed');
+	$("#your_ships").parent().css('display', 'none');
+	view.displayMessage("Начало игры");
 	}
+
 };
 
 
@@ -219,9 +229,8 @@ var controller = {
 window.onload = function() {
 	model.deployShips();
 	controller.fill_the_fields();
-	controller.startGame();
+	controller.prepareGame();
 	var ships_amount = $("#your_ships").text();
-	console.log(ships_amount);
 //установка кораблей
 	$("#enemys_field").on("click", "td[id]",function(){
 		$(this).not('.placed').toggleClass('selected');
@@ -236,16 +245,24 @@ window.onload = function() {
 
 //события
 	$("#confirm").on("click", function(){
+		if () {
+			
+		}
 		$(".selected").addClass("placed").removeClass("selected");
 		view.displayMessage("Корабль успешно установлен!");
 		$("#confirm").css("display", "none");
 		ships_amount--;
 		$("#your_ships").text(ships_amount);
+		if (ships_amount === 0){
+			$(this).off("click");
+			$("#enemys_field").off("click");
+			controller.startGame();
+		}
 	})
 
 	$("#shot").on("click", function () {
 		controller.processGuess(document.getElementById('guessInput').value);
-		fill_the_fields();
+		controller.fill_the_fields();
 		$("#guessInput").val("");
 		});
 

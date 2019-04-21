@@ -71,8 +71,8 @@ caption {
 	display:none;
 }
 .selected {
-	background-color: #0c5ad6;
+	background-color: blue;
 }
 .placed {
-	background-color: blue;
+	background-color: purple;
 }
