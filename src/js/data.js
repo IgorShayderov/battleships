@@ -24,11 +24,20 @@ const model = {
         shipsSunk: 0,
     },
 
-hits: 0,
-misses: 0,
+    information: {
+        total_shots: 0,
+        hits: 0,
+        misses: 0,
+        hits_left: 0
+    },
+
 
 vertical_cells: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
 hitted_cells: [],
 
 ships: []
+}
+
+const controller = {
+
 }
