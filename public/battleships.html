@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html lang="ru">
+
+<head>
+	<title>Морской бой</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+<main>
+
+	<h1 class="header">Морской бой</h1>
+
+	<div class="sysInformation">
+		<p>Всего выстрелов: <span id="sysInformation__totalShots">0</span>.</p>
+		<p>Попаданий: <span id="sysInformation__totalHits">0</span>.</p>
+		<p>Промахов: <span id="sysInformation__totalMisses">0</span>.</p>
+		<p>Осталось раз попасть: <span id="sysInformation__hitsLeft">0</span>.</p>
+		<p>Корабли: <span id="sysInformation__shipAmount">0</span></p>
+	</div>
+
+	<div class="fieldContainer">
+		<table class="fieldContainer__yourField">
+			<caption>Корабли противника</caption>	
+		</table>
+		<table class="fieldContainer__enemiesField">
+	    	<caption>Ваши корабли</caption>		
+		</table>
+	</div>
+	
+	<div class="buttonsContainer">
+		<label for="buttonsContainer__guessInput">Вввод:</label>
+		<input id="buttonsContainer__guessInput" type="text">
+		<button id="buttonsContainer__shot">Выстрел!</button>
+		<button id="buttonsContainer__restartGame">Начать заново</button>
+		<button id='buttonsContainer__confirm'>Подтвердить</button>
+	</div>
+
+	<div class="sysMessageContainer">
+		<p id="sysMessageContainer__window">Окно системных сообщений.</p>
+	</div>
+
+</main>
+</body>
+
+</html>

@@ -2,17 +2,19 @@ html{
 	font-size: 16px;
 }
 body {
-	background-image: url(".././img/battleship.jpg");
+	// background-image: url("../../public/img/battleship.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: #b8cdd9;
 }
 .header{
 	text-align: center;
+	margin: 0 10px;
 }
 .sysMessageContainer{
 	display: flex;
 	justify-content: center;
+	position: fixed;
 }
 #sysMessageContainer__window{
 	
