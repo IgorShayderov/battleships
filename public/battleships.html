@@ -4,7 +4,7 @@
 <head>
 	<title>Морской бой</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="wclassth=device-wclassth, initial-scale=1">
 </head>
 
 <body>
@@ -12,34 +12,37 @@
 
 	<h1 class="header">Морской бой</h1>
 
-	<div class="sysInformation">
-		<p>Всего выстрелов: <span id="sysInformation__totalShots">0</span>.</p>
-		<p>Попаданий: <span id="sysInformation__totalHits">0</span>.</p>
-		<p>Промахов: <span id="sysInformation__totalMisses">0</span>.</p>
-		<p>Осталось раз попасть: <span id="sysInformation__hitsLeft">0</span>.</p>
-		<p>Корабли: <span id="sysInformation__shipAmount">0</span></p>
-	</div>
-
 	<div class="fieldContainer">
-		<table class="fieldContainer__yourField">
-			<caption>Корабли противника</caption>	
-		</table>
-		<table class="fieldContainer__enemiesField">
-	    	<caption>Ваши корабли</caption>		
-		</table>
+		<h3>Корабли противника</h2>
+		<div class="yourField"></div>
+		<h3>Ваши корабли</h2>
+		<div class="enemysField"></div>
 	</div>
 	
-	<div class="buttonsContainer">
-		<label for="buttonsContainer__guessInput">Вввод:</label>
-		<input id="buttonsContainer__guessInput" type="text">
-		<button id="buttonsContainer__shot">Выстрел!</button>
-		<button id="buttonsContainer__restartGame">Начать заново</button>
-		<button id='buttonsContainer__confirm'>Подтвердить</button>
+	<span class="sysInfButton">Статистика</span>
+	<div class="sysInformation">
+		<p>Всего выстрелов: <span class="totalShots">0</span>.</p>
+		<p>Попаданий: <span class="totalHits">0</span>.</p>
+		<p>Промахов: <span class="totalMisses">0</span>.</p>
+		<p>Осталось раз попасть: <span class="hitsLeft">0</span>.</p>
+		<p>Корабли: <span class="shipAmount">0</span>.</p>
 	</div>
 
-	<div class="sysMessageContainer">
-		<p id="sysMessageContainer__window">Окно системных сообщений.</p>
+	<div class="emptyContainer"></div>
+	<div class="buttonsContainer">
+		<p class="sysMessage">Окно системных сообщений.</p>
+		<div class="mainButton">
+			<label for="guessInput">Вввод:</label>
+			<input class="guessInput" type="text" placeholder="например A1">
+			<button class="shot">Выстрел!</button>
+		</div>
+		<div class="additionalButtons">
+			<button class="restartGame">Начать заново</button>
+			<button class="confirm">Подтвердить</button>
+		</div>
 	</div>
+
+
 
 </main>
 </body>

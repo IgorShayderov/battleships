@@ -1,8 +1,21 @@
 import '../scss/battleships.scss';
-import './data.js';
+import * as Data from "./data.js";
+"use strict";
+
+document.querySelector(".sysInfButton").addEventListener("click", function(){
+	let sysInf = document.querySelector(".sysInformation");
+	if ( sysInf.getAttribute("style") ) {
+		sysInf.removeAttribute("style");
+	} else {
+		sysInf.setAttribute("style", "display:flex;");
+	}
+})
 
 window.addEventListener("load", function(){
-	this.console.log("Page successfully loaded.");
 	// view.displayMessage("Сообщения успешно выводятся на экран.");
-	view.displayMessage("hi");
+	// Data.view.displayMessage("");
+	Data.model.create();
+	Data.model.create("enemysField");
+	
+
 }); 

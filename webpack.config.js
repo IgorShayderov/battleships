@@ -7,13 +7,14 @@ let conf = {
     output: {
         path: path.resolve(__dirname, './build'),
         filename: 'main.js',
-        publicPath: '/'
+        publicPath: './'
     },
     devServer: {
         overlay: true,
         publicPath: "/",
         contentBase: path.join(__dirname, 'public'),
-        watchContentBase: true
+        watchContentBase: true,
+        host: '0.0.0.0'
     },
     module: {
         rules: [

@@ -1,28 +1,82 @@
 html{
-	font-size: 16px;
+	font-size: medium;
 }
 body {
-	// background-image: url("../../public/img/battleship.jpg");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-color: #b8cdd9;
+	background: linear-gradient(to left, hsl(240, 65, 40) 0%, hsl(240, 50, 65) 50%, hsl(240, 25, 90) 100%);
+	margin: auto;
 }
 .header{
 	text-align: center;
-	margin: 0 10px;
+	margin-top: 5px;
 }
-.sysMessageContainer{
-	display: flex;
-	justify-content: center;
-	position: fixed;
+.sysInfButton{
+	cursor: pointer;
+	position: relative;
+	left: calc(50% - 46.5px);
+
+	&::before{
+		content: "\25bc";
+	}
 }
-#sysMessageContainer__window{
-	
+.fieldContainer{
+	> div{
+		border-top: 1px solid black;
+		border-left: 1px solid black;
+		margin: 2%;
+		margin-top: 0;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+	h3{
+		text-align: center;
+	}
+	.cell{
+		box-sizing: border-box;
+		border-right: 1px solid black;
+		border-bottom: 1px solid black;
+		text-align: center;
+		min-width: 30px;
+    	min-height: 30px;
+	}
+	.newRow{
+		flex-grow: 1;
+	}
 }
 .sysInformation{
-	display: flex;
+	display: none;
 	flex-direction: column;
+	border: 1px dashed black;
+	margin: 0 2%;
+	padding: 1.5%;
+
+	p{
+		margin: 5px 0;
+	}
 }
-.sysInformation p{
-	margin: 5px 0;
+.emptyContainer{	
+	margin-bottom: 86px;
 }
+.buttonsContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	border: 1px dotted black;
+	box-sizing: border-box;
+	background-color: red;
+
+	button{
+		cursor: pointer;
+	}
+	.sysMessage{
+		margin: 5px 0;
+	}
+	& > *{
+		margin-bottom: 5px;
+	}
+}
+

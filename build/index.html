@@ -4,25 +4,20 @@
 <head>
 	<title>Морской бой</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-<link href="build/style.css" rel="stylesheet"></head>
+	<meta name="viewport" content="wclassth=device-wclassth, initial-scale=1">
+<link href="/style.css" rel="stylesheet"></head>
 
 <body>
 <main>
 
 	<h1 class="header">Морской бой</h1>
 
-	<div class="sysMessageContainer">
-		<p id="sysMessageContainer__window">Окно системных сообщений.</p>
-	</div>
-
 	<div class="sysInformation">
-		<p>Всего выстрелов: <span id="sysInformation__totalShots">0</span>.</p>
-		<p>Попаданий: <span id="sysInformation__totalHits">0</span>.</p>
-		<p>Промахов: <span id="sysInformation__totalMisses">0</span>.</p>
-		<p>Осталось раз попасть: <span id="sysInformation__hitsLeft">0</span>.</p>
-		<p>Корабли: <span id="sysInformation__shipAmount">0</span></p>
+		<p>Всего выстрелов: <span class="sysInformation__totalShots">0</span>.</p>
+		<p>Попаданий: <span class="sysInformation__totalHits">0</span>.</p>
+		<p>Промахов: <span class="sysInformation__totalMisses">0</span>.</p>
+		<p>Осталось раз попасть: <span class="sysInformation__hitsLeft">0</span>.</p>
+		<p>Корабли: <span class="sysInformation__shipAmount">0</span></p>
 	</div>
 
 	<div class="fieldContainer">
@@ -35,15 +30,21 @@
 	</div>
 	
 	<div class="buttonsContainer">
-		<label for="buttonsContainer__guessInput">Вввод:</label>
-		<input id="buttonsContainer__guessInput" type="text">
-		<button id="buttonsContainer__shot">Выстрел!</button>
-		<button id="buttonsContainer__restartGame">Начать заново</button>
-		<button id='buttonsContainer__confirm'>Подтвердить</button>
+		<p class="buttonsContainer__sysMessage">Окно системных сообщений.</p>
+		<div class="buttonsContainer__mainButton">
+			<label for="buttonsContainer__guessInput">Вввод:</label>
+			<input class="buttonsContainer__guessInput" type="text">
+			<button class="buttonsContainer__shot">Выстрел!</button>
+		</div>
+		<div class="buttonsContainer__additionalButtons">
+			<button class="buttonsContainer__restartGame">Начать заново</button>
+			<button class='buttonsContainer__confirm'>Подтвердить</button>
+		</div>
 	</div>
 
 
+
 </main>
-<script type="text/javascript" src="build/main.js"></script></body>
+<script type="text/javascript" src="/main.js"></script></body>
 
 </html>
