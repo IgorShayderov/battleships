@@ -13,10 +13,10 @@
 	<h1 class="header">Морской бой</h1>
 
 	<div class="fieldContainer">
-		<h3>Корабли противника</h2>
-		<div class="yourField"></div>
-		<h3>Ваши корабли</h2>
+		<h3>Корабли противника</h2>	
 		<div class="enemysField"></div>
+		<h3>Ваши корабли</h2>
+		<div class="yourField"></div>
 	</div>
 	
 	<span class="sysInfButton">Статистика</span>
@@ -24,7 +24,7 @@
 		<p>Всего выстрелов: <span class="totalShots">0</span>.</p>
 		<p>Попаданий: <span class="totalHits">0</span>.</p>
 		<p>Промахов: <span class="totalMisses">0</span>.</p>
-		<p>Осталось раз попасть: <span class="hitsLeft">0</span>.</p>
+		<p>Осталось кораблей противника: <span class="shipsLeft">0</span>.</p>
 		<p>Корабли: <span class="shipAmount">0</span>.</p>
 	</div>
 
@@ -33,17 +33,15 @@
 		<p class="sysMessage">Окно системных сообщений.</p>
 		<div class="mainButton">
 			<label for="guessInput">Вввод:</label>
-			<input class="guessInput" type="text" placeholder="например A1">
+			<input class="guessInput" type="text" placeholder="Например: A1" autocomplete="off">
 			<button class="shot">Выстрел!</button>
 		</div>
 		<div class="additionalButtons">
-			<button class="restartGame">Начать заново</button>
-			<button class="confirm">Подтвердить</button>
+			<button class="restartGame" disabled="disabled">Начать заново</button>
+			<button class="confirm" disabled="disabled">Подтвердить</button>
 		</div>
 	</div>
-
-
-
+	
 </main>
 </body>
 

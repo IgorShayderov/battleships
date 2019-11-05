@@ -2,21 +2,12 @@ html{
 	font-size: medium;
 }
 body {
-	background: linear-gradient(to left, hsl(240, 65, 40) 0%, hsl(240, 50, 65) 50%, hsl(240, 25, 90) 100%);
+	background: linear-gradient(to left, hsl(240, 55, 40) 0%, hsl(240, 50, 65) 50%, hsl(240, 25, 90) 100%);
 	margin: auto;
 }
 .header{
 	text-align: center;
 	margin-top: 5px;
-}
-.sysInfButton{
-	cursor: pointer;
-	position: relative;
-	left: calc(50% - 46.5px);
-
-	&::before{
-		content: "\25bc";
-	}
 }
 .fieldContainer{
 	> div{
@@ -39,8 +30,17 @@ body {
 		min-width: 30px;
     	min-height: 30px;
 	}
-	.newRow{
+	.newCol{
 		flex-grow: 1;
+	}
+}
+.sysInfButton{
+	cursor: pointer;
+	position: relative;
+	left: calc(50% - 46.5px);
+
+	&::before{
+		content: "\25bc";
 	}
 }
 .sysInformation{
@@ -79,4 +79,10 @@ body {
 		margin-bottom: 5px;
 	}
 }
-
+// служебные классы
+.hit{
+	background-color: red;
+}
+.miss{
+	background-color: green;
+}

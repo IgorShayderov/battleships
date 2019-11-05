@@ -14,8 +14,7 @@ document.querySelector(".sysInfButton").addEventListener("click", function(){
 window.addEventListener("load", function(){
 	// view.displayMessage("Сообщения успешно выводятся на экран.");
 	// Data.view.displayMessage("");
-	Data.model.create();
-	Data.model.create("enemysField");
-	
-
+	Data.model.createField();
+	Data.model.createField("enemysField");
+	// Data.controller.validateInput("A3");
 }); 
