@@ -29,21 +29,19 @@ let conf = {
             }
         ]
     },
-    plugins: [  // Array of plugins to apply to build chunk
+    plugins: [
         new HtmlWebpackPlugin({
             template: __dirname + "/public/battleships.html",
             inject: 'body'
         }),
         new MiniCssExtractPlugin({
-        filename: 'style.css',
+            filename: 'style.css',
         })
     ]
 };
 
 module.exports = (env, options) => {
-    conf.devtool = options.mode === "production" ? 
-                    false :
-                    "cheap-module-eval-source-map";
+    conf.devtool = options.mode === "production" ? false : "cheap-module-eval-source-map";
 
     return conf;
 };

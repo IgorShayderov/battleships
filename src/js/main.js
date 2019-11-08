@@ -17,4 +17,5 @@ window.addEventListener("load", function(){
 	Data.model.createField();
 	Data.model.createField("enemysField");
 	// Data.controller.validateInput("A3");
+	Data.model.deployShips();
 }); 

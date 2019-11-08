@@ -77,7 +77,7 @@ export const model = {
     createShip: function(){
         let shipLocations = [];
 
-        let randomLetter = vertical_cells[controller.rand(0, this.options.boardSize - 1)];
+        let randomLetter = this.vertical_cells[controller.rand(0, this.options.boardSize - 1)];
         let randomDigit = controller.rand(1, this.options.boardSize);
         let position = randomLetter + randomDigit;
 
@@ -108,15 +108,15 @@ export const model = {
             }
         }
 
-        let avaliale_directions = [];
+        let avaliable_directions = [];
         for ( let key in directions ){
             if ( directions[key] == true ){
-                avaliale_directions.push(key);
+                avaliable_directions.push(key);
             }
         }
 
-        let direction = avaliable_directions[controller.rand(0, avaliale_directions.length)];
-        for( i = 0; i < shipLength; i++ ){
+        let direction = avaliable_directions[controller.rand(0, avaliable_directions.length)];
+        for( let i = 0; i < this.shipLength; i++ ){
             shipLocations.push(position);
             switch (direction){
                 case "canMoveUp":
@@ -138,10 +138,11 @@ export const model = {
     },
 
     deployShips: function(){
-        for( let i = 0; i < this.options.numShips; i++ ){
-            this.shipLocations["enemysField"].set(`ship ${i}`, this.createShip());
-        }
         
+        for( let i = 0; i < this.options.numShips; i++ ){
+            this.shipLocations["enemysShips"].set(`ship ${i}`, this.createShip());
+        }
+        console.log(this.shipLocations);
     }
 }
 
