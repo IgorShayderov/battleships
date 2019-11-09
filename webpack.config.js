@@ -1,11 +1,20 @@
 let path = require('path');
+let glob = require("glob");
+
+let entry = __dirname + './src/js/main.js';
+let outputPath = path.resolve(__dirname, './build');
+if (process.env.TESTBUILD) {
+ entry = glob.sync(__dirname + "./test/*.js");
+ outputPath = __dirname + "/test-dist/";
+}
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 let conf = {
-    entry: './src/js/main.js',
+    entry: entry,
     output: {
-        path: path.resolve(__dirname, './build'),
+        path: outputPath,
         filename: 'main.js',
         publicPath: './'
     },

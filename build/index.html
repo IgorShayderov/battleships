@@ -5,46 +5,44 @@
 	<title>Морской бой</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="wclassth=device-wclassth, initial-scale=1">
-<link href="/style.css" rel="stylesheet"></head>
+<link href="./style.css" rel="stylesheet"></head>
 
 <body>
 <main>
 
 	<h1 class="header">Морской бой</h1>
 
-	<div class="sysInformation">
-		<p>Всего выстрелов: <span class="sysInformation__totalShots">0</span>.</p>
-		<p>Попаданий: <span class="sysInformation__totalHits">0</span>.</p>
-		<p>Промахов: <span class="sysInformation__totalMisses">0</span>.</p>
-		<p>Осталось раз попасть: <span class="sysInformation__hitsLeft">0</span>.</p>
-		<p>Корабли: <span class="sysInformation__shipAmount">0</span></p>
-	</div>
-
 	<div class="fieldContainer">
-		<table class="fieldContainer__yourField">
-			<caption>Корабли противника</caption>	
-		</table>
-		<table class="fieldContainer__enemiesField">
-	    	<caption>Ваши корабли</caption>		
-		</table>
+		<h3>Корабли противника</h2>	
+		<div class="enemysField"></div>
+		<h3>Ваши корабли</h2>
+		<div class="yourField"></div>
 	</div>
 	
-	<div class="buttonsContainer">
-		<p class="buttonsContainer__sysMessage">Окно системных сообщений.</p>
-		<div class="buttonsContainer__mainButton">
-			<label for="buttonsContainer__guessInput">Вввод:</label>
-			<input class="buttonsContainer__guessInput" type="text">
-			<button class="buttonsContainer__shot">Выстрел!</button>
-		</div>
-		<div class="buttonsContainer__additionalButtons">
-			<button class="buttonsContainer__restartGame">Начать заново</button>
-			<button class='buttonsContainer__confirm'>Подтвердить</button>
-		</div>
+	<span class="sysInfButton">Статистика</span>
+	<div class="sysInformation">
+		<p>Всего выстрелов: <span class="totalShots">0</span>.</p>
+		<p>Попаданий: <span class="totalHits">0</span>.</p>
+		<p>Промахов: <span class="totalMisses">0</span>.</p>
+		<p>Осталось кораблей противника: <span class="shipsLeft">0</span>.</p>
+		<p>Корабли: <span class="shipAmount">0</span>.</p>
 	</div>
 
-
-
+	<div class="emptyContainer"></div>
+	<div class="buttonsContainer">
+		<p class="sysMessage">Окно системных сообщений.</p>
+		<div class="mainButton">
+			<label for="guessInput">Вввод:</label>
+			<input class="guessInput" type="text" placeholder="Например: A1" maxlength="2" autocomplete="off">
+			<button class="shot" disabled="disabled">Выстрел!</button>
+		</div>
+		<div class="additionalButtons">
+			<button class="restartGame" disabled="true">Начать заново</button>
+			<button class="confirm" disabled="true">Подтвердить</button>
+		</div>
+	</div>
+	
 </main>
-<script type="text/javascript" src="/main.js"></script></body>
+<script type="text/javascript" src="./main.js"></script></body>
 
 </html>

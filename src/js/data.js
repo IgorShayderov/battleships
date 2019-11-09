@@ -1,4 +1,5 @@
 export * from "./data";
+
 export const view = {
     displayMessage: function(msg) {
         document.querySelector(".sysMessage").innerHTML = msg;
@@ -7,18 +8,17 @@ export const view = {
         document.querySelector(element).innerHTML = data;
     },
     displayHit: function(location, field = "enemysField") {
-        let hit_cell = model.field[field].get(location);
-        hit_cell.classList.add("hit");
+        location.classList.add("hit");
         this.displayMessage("Вы попали во вражеский корабль!");
     },
     displayMiss: function(location, field = "enemysField") {
-        let miss_cell = model.field[field].get(location);
-        miss_cell.classList.add("miss");
+        location.classList.add("miss");
         this.displayMessage("Вы промахнулись!");
     }
 };
 
 export const model = {
+
     options: {
         boardSize: 7, // от 7 до 9
         numShips: 3,
@@ -72,6 +72,8 @@ export const model = {
             row.appendChild(cell);
             letter_index++;
         }
+
+        console.log(this.field[field]);
     },
 
     createShip: function(){
@@ -80,31 +82,38 @@ export const model = {
         let randomLetter = this.vertical_cells[controller.rand(0, this.options.boardSize - 1)];
         let randomDigit = controller.rand(1, this.options.boardSize);
         let position = randomLetter + randomDigit;
-
+        console.log("Starting position: " + position);
         let directions = {
         canMoveUp: true,
         canMoveDown: true,
         canMoveLeft: true,
         canMoveRight: true
         }
-        
-        if ( randomLetter === "A" ){
+        console.log("Char At 0: " + position.charAt(0));
+        console.log("Char At 1: " + position.charAt(1));
+        if ( position.charAt(0) === "A" ){
             directions.canMoveUp = false;
-        } else if ( randomLetter === (this.current_vCells()[this.options.boardSize - 1]) ){
+        } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 1]) ){
             directions.canMoveDown = false;
         }
 
-        if ( randomDigit === 1 ){
+        if ( position.charAt(1) === "1" ){
             directions.canMoveLeft = false;
-        } else if ( randomDigit === this.options.boardSize ){
+        } else if ( position.charAt(1) === `${this.options.boardSize}` ){
             directions.canMoveRight = false;
         }
 
         if ( this.options.shipLength === 3 ){
-            if ( randomLetter === "B" ){
+            if ( position.charAt(0) === "B" ){
                 directions.canMoveUp = false;
-            } else if ( randomLetter === (this.current_vCells()[this.options.boardSize - 2]) ){
-            directions.canMoveDown = false;
+            } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 2]) ){
+                directions.canMoveDown = false;
+            }
+
+            if( position.charAt(1) === "2" ){
+                directions.canMoveLeft = false;
+            } else if ( position.charAt(1) === `${(this.options.boardSize - 1)}` ){
+                directions.canMoveRight = false;
             }
         }
 
@@ -114,10 +123,15 @@ export const model = {
                 avaliable_directions.push(key);
             }
         }
-
-        let direction = avaliable_directions[controller.rand(0, avaliable_directions.length)];
-        for( let i = 0; i < this.shipLength; i++ ){
+        console.log(avaliable_directions);
+        let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
+        console.log("Random digit for direction is: " + arrayItemNum);
+        let direction = avaliable_directions[arrayItemNum];
+        console.log("Direction is: " + direction);
+        console.log("Ship length: " + this.options.shipLength);
+        for( let i = 0; i < this.options.shipLength; i++ ){
             shipLocations.push(position);
+            if ( shipLocations.length === this.options.shipLength ) { break; }
             switch (direction){
                 case "canMoveUp":
                 position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) - 1 ] + position.charAt(1);
@@ -131,16 +145,21 @@ export const model = {
                 case "canMoveRight":
                 position = position.charAt(0) + (parseInt(position.charAt(1)) + 1);
             }
+            console.log("New position is: " + position);
         }
-
+        shipLocations.forEach(function(elem, index){
+            console.log(index + " : " + elem);
+        });
         return shipLocations;
 
     },
 
     deployShips: function(){
-        
         for( let i = 0; i < this.options.numShips; i++ ){
             this.shipLocations["enemysShips"].set(`ship ${i}`, this.createShip());
+
+
+            console.log("*******************************************");
         }
         console.log(this.shipLocations);
     }
@@ -154,14 +173,28 @@ export const controller = {
     },
 
     validateInput: function(input){
-        let cell = model.field["enemysField"].get(input)
+        input = input.charAt(0).toUpperCase() + input.charAt(1);
+        let cell = model.field["enemysField"].get(input); 
+
         if ( cell ) {
             console.log(cell);
-            return cell;
+            return this.processInput(cell);
         } else {
             console.log(input);
-            view.displayMessage("Неправильные координаты.")
+            view.displayMessage("Неправильные координаты.");
+            throw new Error("Неправильные координаты.");
+        }
+    },
+
+    processInput: function(cell){
+        if ( cell ){
+            view.displayMessage("Вы попали во вражеский корабль!");
+            view.displayHit(cell);
+        } else {
+            view.displayMiss(cell);
+            view.displayMessage("Промах!");
         }
     }
 
 }
+
