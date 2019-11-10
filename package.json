@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "TESTBUILD=true webpack && mocha test-dist/main.js && rm -rf test-dist",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },

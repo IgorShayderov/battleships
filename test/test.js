@@ -1,4 +1,3 @@
-let data = require('../src/js/data.js')
 let assert = require('assert');
 
 describe('Array', function() {

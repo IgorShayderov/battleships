@@ -77,81 +77,103 @@ export const model = {
     },
 
     createShip: function(){
-        let shipLocations = [];
+    startShip:
+        for( let i = 0; i < 20; i++ ){
+            let shipLocations = [];
+            let randomLetter = this.vertical_cells[controller.rand(0, this.options.boardSize - 1)];
+            let randomDigit = controller.rand(1, this.options.boardSize);
+            let position = randomLetter + randomDigit;
 
-        let randomLetter = this.vertical_cells[controller.rand(0, this.options.boardSize - 1)];
-        let randomDigit = controller.rand(1, this.options.boardSize);
-        let position = randomLetter + randomDigit;
-        console.log("Starting position: " + position);
-        let directions = {
-        canMoveUp: true,
-        canMoveDown: true,
-        canMoveLeft: true,
-        canMoveRight: true
-        }
-        console.log("Char At 0: " + position.charAt(0));
-        console.log("Char At 1: " + position.charAt(1));
-        if ( position.charAt(0) === "A" ){
-            directions.canMoveUp = false;
-        } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 1]) ){
-            directions.canMoveDown = false;
-        }
+            console.log("Starting position: " + position);
+            console.log("Char At 0: " + position.charAt(0));
+            console.log("Char At 1: " + position.charAt(1));
 
-        if ( position.charAt(1) === "1" ){
-            directions.canMoveLeft = false;
-        } else if ( position.charAt(1) === `${this.options.boardSize}` ){
-            directions.canMoveRight = false;
-        }
+            if ( controller.validatePosition(position) ){
+                console.log("Continue! Loop stated again");
+                continue;
+            }
 
-        if ( this.options.shipLength === 3 ){
-            if ( position.charAt(0) === "B" ){
+            
+            let directions = {
+            canMoveUp: true,
+            canMoveDown: true,
+            canMoveLeft: true,
+            canMoveRight: true
+            }
+
+
+            if ( position.charAt(0) === "A" ){
                 directions.canMoveUp = false;
-            } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 2]) ){
+            } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 1]) ){
                 directions.canMoveDown = false;
             }
 
-            if( position.charAt(1) === "2" ){
+            if ( position.charAt(1) === "1" ){
                 directions.canMoveLeft = false;
-            } else if ( position.charAt(1) === `${(this.options.boardSize - 1)}` ){
+            } else if ( position.charAt(1) === `${this.options.boardSize}` ){
                 directions.canMoveRight = false;
             }
-        }
 
-        let avaliable_directions = [];
-        for ( let key in directions ){
-            if ( directions[key] == true ){
-                avaliable_directions.push(key);
-            }
-        }
-        console.log(avaliable_directions);
-        let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
-        console.log("Random digit for direction is: " + arrayItemNum);
-        let direction = avaliable_directions[arrayItemNum];
-        console.log("Direction is: " + direction);
-        console.log("Ship length: " + this.options.shipLength);
-        for( let i = 0; i < this.options.shipLength; i++ ){
-            shipLocations.push(position);
-            if ( shipLocations.length === this.options.shipLength ) { break; }
-            switch (direction){
-                case "canMoveUp":
-                position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) - 1 ] + position.charAt(1);
-                break;
-                case "canMoveDown":
-                position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) + 1 ] + position.charAt(1);
-                break;
-                case "canMoveLeft":
-                position = position.charAt(0) + (parseInt(position.charAt(1)) - 1);
-                break;
-                case "canMoveRight":
-                position = position.charAt(0) + (parseInt(position.charAt(1)) + 1);
-            }
-            console.log("New position is: " + position);
-        }
-        shipLocations.forEach(function(elem, index){
-            console.log(index + " : " + elem);
-        });
-        return shipLocations;
+            if ( this.options.shipLength === 3 ){
+                if ( position.charAt(0) === "B" ){
+                    directions.canMoveUp = false;
+                } else if ( position.charAt(0) === (this.current_vCells()[this.options.boardSize - 2]) ){
+                    directions.canMoveDown = false;
+                }
 
+                if( position.charAt(1) === "2" ){
+                    directions.canMoveLeft = false;
+                } else if ( position.charAt(1) === `${(this.options.boardSize - 1)}` ){
+                    directions.canMoveRight = false;
+                }
+            }
+
+            let avaliable_directions = [];
+            for ( let key in directions ){
+                if ( directions[key] == true ){
+                    avaliable_directions.push(key);
+                }
+            }
+            console.log(avaliable_directions);
+
+            let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
+
+            console.log("Random digit for direction is: " + arrayItemNum);
+
+            let direction = avaliable_directions[arrayItemNum];
+
+            console.log("Direction is: " + direction);
+            console.log("Ship length: " + this.options.shipLength);
+
+            for( let i = 0; i < this.options.shipLength; i++ ){
+                shipLocations.push(position);
+                if ( shipLocations.length === this.options.shipLength ) { break; }
+                switch (direction){
+                    case "canMoveUp":
+                    position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) - 1 ] + position.charAt(1);
+                    break;
+                    case "canMoveDown":
+                    position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) + 1 ] + position.charAt(1);
+                    break;
+                    case "canMoveLeft":
+                    position = position.charAt(0) + (parseInt(position.charAt(1)) - 1);
+                    break;
+                    case "canMoveRight":
+                    position = position.charAt(0) + (parseInt(position.charAt(1)) + 1);
+                }
+                console.log( controller.validatePosition(position) )
+                if ( controller.validatePosition(position) ){
+                    console.log("Continue! Loop stated again");
+                    continue startShip;
+                } 
+                console.log("New position is: " + position);
+            }
+            shipLocations.forEach(function(elem, index){
+                console.log(index + " : " + elem);
+            });
+            return shipLocations;
+        }
+        console.log("Exceed of tries to create ship.");
     },
 
     deployShips: function(){
@@ -172,6 +194,21 @@ export const controller = {
         return lowest + Math.floor(Math.random() * range);
     },
 
+    validatePosition: function(position){
+        let shipLoc = model.shipLocations["enemysShips"]
+        console.log("Validating " + position);
+        for( let [key, value] of shipLoc ){
+            value.forEach(function(shipLoc, index){
+                console.log(position + " isEqual? " + shipLoc);
+               if( position === shipLoc ){
+                console.log("Collision!")
+                return true;
+               }
+            })
+        }
+        return false;
+    },
+
     validateInput: function(input){
         input = input.charAt(0).toUpperCase() + input.charAt(1);
         let cell = model.field["enemysField"].get(input); 
@@ -182,7 +219,6 @@ export const controller = {
         } else {
             console.log(input);
             view.displayMessage("Неправильные координаты.");
-            throw new Error("Неправильные координаты.");
         }
     },
 

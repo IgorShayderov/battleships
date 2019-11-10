@@ -2,7 +2,7 @@ import '../scss/battleships.scss';
 import * as Data from "./data.js";
 "use strict";
 
-let textPrompt = document.querySelector(".guessInput");
+let textPrompt = document.querySelector("#guessInput");
 let buttonForShooting = document.querySelector(".shot");
 let statisticsButton = document.querySelector(".sysInfButton");
 let statistics = document.querySelector(".sysInformation");
@@ -18,6 +18,7 @@ statisticsButton.addEventListener("click", function(){
 buttonForShooting.addEventListener("click", function(e){
 	Data.controller.validateInput(textPrompt.value);
 	textPrompt.value = "";
+	buttonForShooting.setAttribute("disabled", "disabled");
 });
 
 textPrompt.addEventListener("keyup", function(e){
@@ -27,9 +28,7 @@ textPrompt.addEventListener("keyup", function(e){
 	if ( this.value.length === 2 ){
 		console.log("Length is 2!");
 		buttonForShooting.removeAttribute("disabled");
-	} else {
-		buttonForShooting.setAttribute("disabled", "true");
-	}
+	} 
 });
 
 window.addEventListener("load", function(){
@@ -44,3 +43,7 @@ window.addEventListener("load", function(){
 		console.log(e);
 	}
 }); 
+
+// Создание корабля это цикл. 
+// Он выполняется до условия когда кораблю будут присвоены локации.
+// Если локация не проходит валидацию, то цикл начинается снова.
