@@ -80,9 +80,12 @@ body {
 	}
 }
 // служебные классы
-.hit{
+.cheat{
+	background-color: yellow;
+}
+div.hit{
 	background-color: red;
 }
-.miss{
+div.miss{
 	background-color: green;
 }

@@ -5,20 +5,17 @@ export const view = {
         document.querySelector(".sysMessage").innerHTML = msg;
     },
     renderData: function(element, data) {
-        document.querySelector(element).innerHTML = data;
+        element.innerHTML = data;
     },
     displayHit: function(location, field = "enemysField") {
         location.classList.add("hit");
-        this.displayMessage("Вы попали во вражеский корабль!");
     },
     displayMiss: function(location, field = "enemysField") {
         location.classList.add("miss");
-        this.displayMessage("Вы промахнулись!");
     }
 };
 
 export const model = {
-
     options: {
         boardSize: 7, // от 7 до 9
         numShips: 3,
@@ -41,6 +38,13 @@ export const model = {
     field: {
         "yourField": new Map(),
         "enemysField": new Map()
+    },
+
+    sysInfo: {
+        "accuracy": document.querySelector(".accuracy"),
+        totalHits: document.querySelector(".totalHits"),
+        totalMisses: document.querySelector(".totalMisses"),
+        totalShots: document.querySelector(".totalShots")
     },
     
     vertical_cells: ["A", "B", "C", "D", "E", "F", "G", "H", "I"],
@@ -72,13 +76,12 @@ export const model = {
             row.appendChild(cell);
             letter_index++;
         }
-
         console.log(this.field[field]);
     },
 
     createShip: function(){
     startShip:
-        for( let i = 0; i < 20; i++ ){
+        for( let i = 0; i < 15; i++ ){
             let shipLocations = [];
             let randomLetter = this.vertical_cells[controller.rand(0, this.options.boardSize - 1)];
             let randomDigit = controller.rand(1, this.options.boardSize);
@@ -93,14 +96,12 @@ export const model = {
                 continue;
             }
 
-            
             let directions = {
             canMoveUp: true,
             canMoveDown: true,
             canMoveLeft: true,
             canMoveRight: true
             }
-
 
             if ( position.charAt(0) === "A" ){
                 directions.canMoveUp = false;
@@ -135,43 +136,51 @@ export const model = {
                 }
             }
             console.log(avaliable_directions);
+        startDirection:
+            for( let x = 0; x < 15; x++ ){
+                let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
 
-            let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
+                console.log("Random digit for direction is: " + arrayItemNum);
 
-            console.log("Random digit for direction is: " + arrayItemNum);
+                let direction = avaliable_directions[arrayItemNum];
 
-            let direction = avaliable_directions[arrayItemNum];
+                console.log("Direction is: " + direction);
+                console.log("Ship length: " + this.options.shipLength);
 
-            console.log("Direction is: " + direction);
-            console.log("Ship length: " + this.options.shipLength);
-
-            for( let i = 0; i < this.options.shipLength; i++ ){
-                shipLocations.push(position);
-                if ( shipLocations.length === this.options.shipLength ) { break; }
-                switch (direction){
-                    case "canMoveUp":
-                    position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) - 1 ] + position.charAt(1);
-                    break;
-                    case "canMoveDown":
-                    position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) + 1 ] + position.charAt(1);
-                    break;
-                    case "canMoveLeft":
-                    position = position.charAt(0) + (parseInt(position.charAt(1)) - 1);
-                    break;
-                    case "canMoveRight":
-                    position = position.charAt(0) + (parseInt(position.charAt(1)) + 1);
+                for( let i = 0; i < this.options.shipLength; i++ ){
+                    shipLocations.push(position);
+                    if ( shipLocations.length === this.options.shipLength ) { break; }
+                    switch (direction){
+                        case "canMoveUp":
+                        position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) - 1 ] + position.charAt(1);
+                        break;
+                        case "canMoveDown":
+                        position = this.current_vCells()[this.current_vCells().indexOf(position.charAt(0)) + 1 ] + position.charAt(1);
+                        break;
+                        case "canMoveLeft":
+                        position = position.charAt(0) + (parseInt(position.charAt(1)) - 1);
+                        break;
+                        case "canMoveRight":
+                        position = position.charAt(0) + (parseInt(position.charAt(1)) + 1);
+                    }
+                    if ( controller.validatePosition(position) ){
+                        console.log("Continue! Loop stated again");
+                        if ( avaliable_directions.length < 0 ){
+                            let indexOfDirection = avaliable_directions.indexof(direction);
+                            avaliable_directions.splice(indexOfDirection, 1);
+                            continue startDirection;  
+                        } else {
+                            continue startShip;
+                        }
+                    } 
+                    console.log("New position is: " + position);
                 }
-                console.log( controller.validatePosition(position) )
-                if ( controller.validatePosition(position) ){
-                    console.log("Continue! Loop stated again");
-                    continue startShip;
-                } 
-                console.log("New position is: " + position);
+                shipLocations.forEach(function(elem, index){
+                    console.log(index + " : " + elem);
+                });
+                return shipLocations;
             }
-            shipLocations.forEach(function(elem, index){
-                console.log(index + " : " + elem);
-            });
-            return shipLocations;
+
         }
         console.log("Exceed of tries to create ship.");
     },
@@ -188,6 +197,16 @@ export const model = {
 }
 
 export const controller = {
+    cheat: function(){
+        model.shipLocations["enemysShips"].forEach( (value, key) => {
+            value.forEach( element => model.field["enemysField"].get(element).classList.add("cheat") )
+        })
+    },
+
+    calcAccuracy: () => {
+        view.renderData( model.sysInfo["accuracy"], 
+        (parseFloat( model.sysInfo["totalHits"].innerHTML) / parseFloat(model.sysInfo["totalShots"].innerHTML) * 100).toFixed(0));
+    },
 
     rand: function(lowest, highest){
         let range = highest - lowest + 1;
@@ -195,26 +214,21 @@ export const controller = {
     },
 
     validatePosition: function(position){
-        let shipLoc = model.shipLocations["enemysShips"]
+        let shipLoc = model.shipLocations["enemysShips"];
+
         console.log("Validating " + position);
-        for( let [key, value] of shipLoc ){
-            value.forEach(function(shipLoc, index){
-                console.log(position + " isEqual? " + shipLoc);
-               if( position === shipLoc ){
-                console.log("Collision!")
-                return true;
-               }
-            })
+
+        for( let [key, value] of shipLoc ){ 
+           if ( value.some( shipLoc => shipLoc === position ) ){ return true; }
         }
-        return false;
     },
 
     validateInput: function(input){
         input = input.charAt(0).toUpperCase() + input.charAt(1);
-        let cell = model.field["enemysField"].get(input); 
+        let cell = model.field["enemysField"].get(input);
 
         if ( cell ) {
-            console.log(cell);
+            view.renderData(model.sysInfo["totalShots"] , parseInt(model.sysInfo["totalShots"].innerHTML) + 1);
             return this.processInput(cell);
         } else {
             console.log(input);
@@ -223,13 +237,26 @@ export const controller = {
     },
 
     processInput: function(cell){
-        if ( cell ){
-            view.displayMessage("Вы попали во вражеский корабль!");
-            view.displayHit(cell);
-        } else {
-            view.displayMiss(cell);
-            view.displayMessage("Промах!");
+        let shipLoc = model.shipLocations["enemysShips"];
+
+        for( let [key, value] of shipLoc ){ 
+            if ( value.some( loc => loc === cell.innerHTML ) ){
+                let indexOfLocation = shipLoc.get(key).indexOf(cell.innerHTML);
+                value.splice( indexOfLocation, 1 );
+                if ( value.length === 0 ){
+                    view.displayMessage("Вы потопили вражеский корабль!");
+                } else {
+                    view.displayMessage("Вы попали во вражеский корабль!");
+                }
+                view.renderData(model.sysInfo["totalHits"], parseInt(model.sysInfo["totalHits"].innerHTML) + 1);       
+                this.calcAccuracy();
+                return view.displayHit(cell);
+            } 
         }
+        this.calcAccuracy();
+        view.displayMessage("Промах!");
+        view.renderData(model.sysInfo["totalMisses"], parseInt(model.sysInfo["totalMisses"].innerHTML) + 1);
+        view.displayMiss(cell);
     }
 
 }

@@ -26,7 +26,6 @@ textPrompt.addEventListener("keyup", function(e){
 		!buttonForShooting.dispatchEvent(new MouseEvent('click'));
 	}
 	if ( this.value.length === 2 ){
-		console.log("Length is 2!");
 		buttonForShooting.removeAttribute("disabled");
 	} 
 });
@@ -39,6 +38,7 @@ window.addEventListener("load", function(){
 		Data.model.createField("enemysField");
 		// Data.controller.validateInput("A3");
 		Data.model.deployShips();
+		Data.controller.cheat();
 	} catch(e){
 		console.log(e);
 	}

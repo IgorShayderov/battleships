@@ -1,13 +1,10 @@
 let path = require('path');
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
-let conf = {
-    entry: __dirname + '/src/js/main.js',
+module.exports = {
+    entry: './test/test.js',
     output: {
         path: path.resolve(__dirname, '/build'),
-        filename: 'main.js',
+        filename: 'test.js',
         publicPath: './'
     },
     devServer: {
@@ -15,7 +12,7 @@ let conf = {
         publicPath: "/",
         contentBase: path.join(__dirname, 'public'),
         watchContentBase: true,
-        host: '0.0.0.0'
+        port: 8888
     },
     module: {
         rules: [
@@ -29,20 +26,5 @@ let conf = {
                 use:  ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             }
         ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: __dirname + "/public/battleships.html",
-            inject: 'body'
-        }),
-        new MiniCssExtractPlugin({
-            filename: 'style.css',
-        })
-    ]
-};
-
-module.exports = (env, options) => {
-    conf.devtool = options.mode === "production" ? false : "cheap-module-eval-source-map";
-
-    return conf;
+    }
 };
