@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "TESTBUILD=true webpack && mocha test-dist/main.js && rm -rf test-dist",
+    "test": "webpack-dev-server --mode development --config webpack.tests.config.js --open",
     "dev": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production"
   },
@@ -32,6 +32,7 @@
     "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.2",
+    "mocha-loader": "^3.0.0",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
