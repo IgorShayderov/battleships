@@ -3,40 +3,44 @@ let path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: __dirname + '/tests/data.test.js',
+    mode: "development",
+    entry: {
+        data: __dirname + '/src/js/data.js',
+        test: __dirname + '/test/data.test.js'
+    },
     output: {
-        path: path.resolve(__dirname, '/dist_tests')
+        path: path.resolve(__dirname, '/test-build'),
+        filename: '[name].js',
+        publicPath: '/'
     },
     devServer: {
-        port: 8888,
         overlay: true,
-        publicPath: "tests/",
+        publicPath: "/",
+        contentBase: path.join(__dirname, 'public'),
+        watchContentBase: true,
+        port: 8888
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                exclude: ["/node_modules/"],
-                loader: ['babel-loader', 'mocha-loader']
-            }
-            ,
-            {
-                test: /(\.css|\.less)$/,
-                loader: 'null-loader',
-                exclude: [
-                    /build/
-                ]
+                loader: 'babel-loader',
+                exclude: '/node_modules/'
             },
             {
-                test: /(\.jpg|\.jpeg|\.png|\.gif)$/,
-                loader: 'null-loader'
+                test: /\.test\.js$/,
+                loader: 'mocha-loader',
+                exclude: '/node_modules/'
+            },
+            {
+                test: /\.scss$/i,
+                use:  'null-loader'
             }
         ]
-    }
-    ,
+    },
     plugins: [
         new HtmlWebpackPlugin({
-            template: __dirname + "/tests/test.html",
+            template: __dirname + "/public/tests.html",
             inject: 'body'
         })
     ]

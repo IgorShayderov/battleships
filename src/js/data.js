@@ -164,9 +164,9 @@ export const model = {
             }
 
         startDirection:
-            for( let x = 0; x < 15; x++ ){
-                let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
+            for( let x = 0; x < 4; x++ ){
 
+                let arrayItemNum = controller.rand(0, ( avaliable_directions.length - 1 ) );
                 let direction = avaliable_directions[arrayItemNum];
 
                 for( let i = 0; i < this.options.shipLength; i++ ){
@@ -287,9 +287,13 @@ export const controller = {
 
     validatePosition: function(position){
         let shipLoc = model.shipLocations["enemysShips"];
+        let shipOutscirt = model.shipLocations["enemysOutscirts"];
 
-        for( let [key, value] of shipLoc ){ 
-           if ( value.some( shipLoc => shipLoc === position ) ){ return true; }
+        for( let [key, value] of shipLoc ){
+            if ( value.some( loc => loc === position ) ){ return true; }
+        }
+        for ( let [key, value] of shipOutscirt ){
+            if ( value.has( position ) ){ return true; }
         }
     },
 

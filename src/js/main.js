@@ -18,7 +18,6 @@ statisticsButton.addEventListener("click", function(){
 buttonForShooting.addEventListener("click", function(e){
 	Data.controller.validateInput(textPrompt.value);
 	textPrompt.value = "";
-	buttonForShooting.setAttribute("disabled", "disabled");
 });
 
 textPrompt.addEventListener("keyup", function(e){
@@ -27,23 +26,18 @@ textPrompt.addEventListener("keyup", function(e){
 	}
 	if ( this.value.length === 2 ){
 		buttonForShooting.removeAttribute("disabled");
-	} 
+	} else {
+		buttonForShooting.setAttribute("disabled", "disabled");
+	}
 });
 
 window.addEventListener("load", function(){
 	try {
-		// view.displayMessage("Сообщения успешно выводятся на экран.");
-		// Data.view.displayMessage("");
 		Data.model.createField();
 		Data.model.createField("enemysField");
-		// Data.controller.validateInput("A3");
 		Data.model.deployShips();
 		Data.controller.cheat();
 	} catch(e){
 		console.log(e);
 	}
 }); 
-
-// Создание корабля это цикл. 
-// Он выполняется до условия когда кораблю будут присвоены локации.
-// Если локация не проходит валидацию, то цикл начинается снова.

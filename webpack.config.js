@@ -8,14 +8,14 @@ let conf = {
     output: {
         path: path.resolve(__dirname, '/build'),
         filename: 'main.js',
-        publicPath: './'
+        publicPath: '/'
     },
     devServer: {
         overlay: true,
         publicPath: "/",
         contentBase: path.join(__dirname, 'public'),
         watchContentBase: true,
-        host: '0.0.0.0'
+        host: '192.168.0.12' // мой IPv4 адресс, чтобы можно было заходить с других устройств в одной сети
     },
     module: {
         rules: [
