@@ -29,7 +29,7 @@ module.exports = {
             },
             {
                 test: /\.test\.js$/,
-                loader: 'mocha-loader',
+                loader: ['babel-loader', 'mocha-loader'],
                 exclude: '/node_modules/'
             },
             {
@@ -43,5 +43,6 @@ module.exports = {
             template: __dirname + "/public/tests.html",
             inject: 'body'
         })
-    ]
+    ],
+    devtool: "source-map"
 };

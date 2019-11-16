@@ -32,9 +32,9 @@ export const model = {
 
     shipLocations: {
         "yourShips": new Map(),
-        "yourOutscirts": new Map(),
+        "yourOutskirts": new Map(),
         "enemysShips": new Map(),
-        "enemysOutscirts": new Map()
+        "enemysOutskirts": new Map()
     },
 
     field: {
@@ -251,10 +251,11 @@ export const model = {
 
     deployShips: function(){
         let shipLoc = this.shipLocations["enemysShips"];
-        let shipOutscirt = this.shipLocations["enemysOutscirts"];
+        let shipOutskirt = this.shipLocations["enemysOutskirts"];
+        
         for( let i = 0; i < this.options.numShips; i++ ){
             shipLoc.set( `ship ${i}`, this.createShip() );
-            shipOutscirt.set( `outskirts ${i}`, this.calcOutskirts(shipLoc.get(`ship ${i}`)) )
+            shipOutskirt.set( `outskirts ${i}`, this.calcOutskirts(shipLoc.get(`ship ${i}`)) )
         }
     }
 }
@@ -267,10 +268,10 @@ export const controller = {
                 position.classList.add("cheat");
             })
         })
-        model.shipLocations["enemysOutscirts"].forEach( (value,key ) => {
+        model.shipLocations["enemysOutskirts"].forEach( (value,key ) => {
             value.forEach( element => {
                 let position = model.field["enemysField"].get(element);
-                position.classList.add("outscirt");
+                position.classList.add("outskirt");
             })
         })
     },
@@ -287,12 +288,12 @@ export const controller = {
 
     validatePosition: function(position){
         let shipLoc = model.shipLocations["enemysShips"];
-        let shipOutscirt = model.shipLocations["enemysOutscirts"];
+        let shipOutskirt = model.shipLocations["enemysOutskirts"];
 
         for( let [key, value] of shipLoc ){
             if ( value.some( loc => loc === position ) ){ return true; }
         }
-        for ( let [key, value] of shipOutscirt ){
+        for ( let [key, value] of shipOutskirt ){
             if ( value.has( position ) ){ return true; }
         }
     },
