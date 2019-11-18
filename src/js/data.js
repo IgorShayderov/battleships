@@ -17,12 +17,13 @@ export const view = {
 
 export const model = {
     options: {
-        boardSize: 7, // от 7 до 9
+        boardSize: 7, 
         numShips: 3,
         shipLength: 3
     },
 
     information: {
+        mountedShips: 0,
         total_shots: 0,
         hits: 0,
         misses: 0,
@@ -106,6 +107,9 @@ export const model = {
             this.field[field].set(cellNum, cell);
             cell.innerHTML = cellNum;
             cell.classList.add("cell");
+            if ( field === "yourField" ){
+                cell.classList.add("beforePick");
+            }
             row.appendChild(cell);
             letter_index++;
         }
@@ -201,8 +205,8 @@ export const model = {
         throw new Error("Exceed of tries to create ship.");
     },
 
-    calcOutskirts: function(shipLocations){ //shipLocations = array
-        let shipLoc = this.shipLocations["enemysShips"];
+    calcOutskirts: function(shipLocations, side="enemysShips"){ //shipLocations = array, side - корабли врага или свои
+        let shipLoc = this.shipLocations[side];
         let outskirts = new Set();
         shipLocations.forEach(function(position){
             let reloc = this.cellRelocation;
@@ -257,6 +261,25 @@ export const model = {
             shipLoc.set( `ship ${i}`, this.createShip() );
             shipOutskirt.set( `outskirts ${i}`, this.calcOutskirts(shipLoc.get(`ship ${i}`)) )
         }
+    },
+
+    mountShip: function(cells, locations){
+        let shipLoc = this.shipLocations["yourShips"];
+        let shipOutskirt = this.shipLocations["yourOutskirts"];
+
+        cells.forEach(function(cell){
+            cell.classList.remove("picked");
+            cell.classList.add("mounted");
+        })
+        shipLoc.set(`ship ${shipLoc.size}`, locations);
+        shipOutskirt.set(`outskirts ${shipLoc.size}`, this.calcOutskirts(shipLoc.get(`ship ${shipLoc.size - 1}`), "yourShips") );
+        
+        model.shipLocations["yourOutskirts"].forEach( (value,key ) => {
+            value.forEach( element => {
+            let position = model.field["yourField"].get(element);
+            position.classList.add("yourOutskirt");
+            })
+        })
     }
 }
 
@@ -331,7 +354,54 @@ export const controller = {
         view.displayMessage("Промах!");
         view.renderData(model.sysInfo["totalMisses"], parseInt(model.sysInfo["totalMisses"].innerHTML) + 1);
         view.displayMiss(cell);
-    }
+    },
 
+    validatePick: function(cells){ //array
+        cells.map = Array.prototype.map;
+
+        let locations = cells.map(function(elem){
+            return elem.innerHTML;
+        })
+        let firstElemLetter = locations[0].charAt(0);
+        let firstElemDigit = locations[0].charAt(1);
+
+        if ( ( locations.every(function(currentValue){
+            return currentValue.charAt(0) === firstElemLetter;
+        }) && this.checkForUnity( locations, "horizontal" ) )
+          ||  ( locations.every(function(currentValue){
+            return currentValue.charAt(1) === firstElemDigit;
+        }) && this.checkForUnity( locations, "vertical" ) )
+        ){
+            model.mountShip(cells, locations);
+            model.information.mountedShips++;
+            view.displayMessage(`Корабль установлен. Осталось кораблей: ${model.options.numShips - model.information.mountedShips}`);
+        } else {
+            cells.forEach(function(cell){
+                cell.classList.remove("picked");
+            })
+            view.displayMessage("Неправильная расстановка корабля");
+        }
+    },
+
+    checkForUnity: function(locations, dir){
+        let middle = locations[1];
+        let reloc = model.cellRelocation;
+
+        if ( dir === "vertical" ){
+            if ( ( reloc.up.call(model, locations[2]) === middle )
+            && ( reloc.down.call(model, locations[0]) === middle ) ){
+                return true;
+            }
+        }
+        else if ( dir === "horizontal" ){
+            if ( ( reloc.left.call(model, locations[2]) === middle )
+            && ( reloc.right.call(model, locations[0]) === middle ) ){
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+    }
 }
 

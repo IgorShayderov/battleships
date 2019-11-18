@@ -4,14 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: "development",
-    entry: {
-        data: __dirname + '/src/js/data.js',
-        test: __dirname + '/test/data.test.js'
-    },
+    entry: __dirname + '/test/data.test.js',
     output: {
         path: path.resolve(__dirname, '/test-build'),
         filename: '[name].js',
-        publicPath: '/'
+        publicPath: '/',
+        devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+        devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]'
     },
     devServer: {
         overlay: true,
@@ -24,12 +23,12 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                loader: ['source-map-loader', 'babel-loader'],
                 exclude: '/node_modules/'
             },
             {
                 test: /\.test\.js$/,
-                loader: ['babel-loader', 'mocha-loader'],
+                loader:  'mocha-loader',
                 exclude: '/node_modules/'
             },
             {
@@ -44,5 +43,5 @@ module.exports = {
             inject: 'body'
         })
     ],
-    devtool: "source-map"
+    devtool: 'cheap-module-eval-source-map'
 };

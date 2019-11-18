@@ -1,4 +1,5 @@
-import * as Data from "../src/js/data.js"; 
+import * as Data from "../src/js/data.js";
+
 let assert = require("chai").assert;
 
 describe("Data.model", function(){
@@ -46,15 +47,6 @@ describe("Data.controller", function(){
 		it("Есть ли введенная позиция в массиве позиций корабля или в наборе(set) ", function(){
 			let exactPosition = Data.model.shipLocations["enemysShips"].get("ship 0")[0];
 			assert.isTrue(Data.controller.validatePosition(exactPosition));
-		})
-	})
-
-	describe("validateInput", function(){
-		before(function(){
-			Data.model.createField("enemysField");
-		})
-		it("Проверяет существует ли введенная позиция на игровом поле", function(){
-			assert.isTrue(Data.controller.validateInput("A1"));
 		})
 	})
 });
