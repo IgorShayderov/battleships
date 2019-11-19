@@ -374,7 +374,12 @@ export const controller = {
         ){
             model.mountShip(cells, locations);
             model.information.mountedShips++;
-            view.displayMessage(`Корабль установлен. Осталось кораблей: ${model.options.numShips - model.information.mountedShips}`);
+            if ( model.information.mountedShips === model.options.numShips ) {
+                view.displayMessage("Все корабли установлены");
+                return true;
+            } else {
+                view.displayMessage(`Корабль установлен. Осталось кораблей: ${model.options.numShips - model.information.mountedShips}`);
+            }
         } else {
             cells.forEach(function(cell){
                 cell.classList.remove("picked");

@@ -49,4 +49,13 @@ describe("Data.controller", function(){
 			assert.isTrue(Data.controller.validatePosition(exactPosition));
 		})
 	})
+
+	describe("checkForUnity", function(){
+		it("Являются ли координаты целостными (близкими друг к другу). Горизонтальные координаты.", function(){
+			assert.isTrue(Data.controller.checkForUnity(["A1", "A2", "A3"], "horizontal"))
+		})
+		it("Являются ли координаты целостными (близкими друг к другу). Вертикальные координаты.", function(){
+			assert.isTrue(Data.controller.checkForUnity(["A1", "B1", "C1"], "vertical"))
+		})
+	})
 });

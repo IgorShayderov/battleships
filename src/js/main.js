@@ -11,7 +11,28 @@ let confirm = document.querySelector(".confirm");
 
 let canPickShip = true;
 let pickedCells = document.querySelectorAll(".yourField div.picked");
-// let shipsAmount = Data.model.options.numShips;
+let pickListener = function(e){
+
+	if ( e.target.classList.contains("cell") && 
+	!(e.target.classList.contains("mounted") ||
+	e.target.classList.contains("yourOutskirt") 
+	) ){
+		if ( e.target.classList.contains("picked") ){
+			e.target.classList.remove("picked");
+		} else if ( canPickShip ){
+			e.target.classList.add("picked");
+		}
+	}
+	pickedCells = document.querySelectorAll(".yourField div.picked");
+
+	if ( pickedCells.length === 3 ){
+		canPickShip = false;
+		confirm.removeAttribute("disabled");
+	} else if ( pickedCells.length < 3 ){
+		canPickShip = true;
+		confirm.setAttribute("disabled", "disabled");
+	}	
+};
 
 statisticsButton.addEventListener("click", function(){
 	if ( statistics.getAttribute("style") ) {
@@ -37,31 +58,16 @@ textPrompt.addEventListener("keyup", function(e){
 	}
 });
 
-yourField.addEventListener("click",function(e){
-
-	if ( e.target.classList.contains("cell") && 
-	!(e.target.classList.contains("mounted") ||
-	e.target.classList.contains("yourOutskirt") 
-	) ){
-		if ( e.target.classList.contains("picked") ){
-			e.target.classList.remove("picked");
-		} else if ( canPickShip ){
-			e.target.classList.add("picked");
-		}
-	}
-	pickedCells = document.querySelectorAll(".yourField div.picked");
-
-	if ( pickedCells.length === 3 ){
-		canPickShip = false;
-		confirm.removeAttribute("disabled");
-	} else if ( pickedCells.length < 3 ){
-		canPickShip = true;
-		confirm.setAttribute("disabled", "disabled");
-	}	
-})
+yourField.addEventListener( "click", pickListener );
 
 confirm.addEventListener("click", function(){
-	Data.controller.validatePick(pickedCells);
+	if (Data.controller.validatePick(pickedCells) ){
+		yourField.removeEventListener("click", pickListener);
+		document.querySelectorAll(".yourField div.cell").forEach(function(elem){
+			elem.classList.remove("beforePick");
+			textPrompt.removeAttribute("disabled", "disabled");
+		})
+	}
 	confirm.setAttribute("disabled", "disabled");
 })
 
